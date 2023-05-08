@@ -37,9 +37,10 @@ public class FacultyController {
     @PostMapping("/update/{id}")
     public void update(@RequestParam(name = "name") String name,
                        @RequestParam(name = "description") String description,
-                       @RequestParam(name = "dean") Long dean_id){
+                       @RequestParam(name = "dean") Long dean_id,
+                       @PathVariable Long id){
         TeacherService teacherService = new TeacherService();
-        service.update(new Faculty(name,description,teacherService.getTeacherById(dean_id)));
+        service.update(new Faculty(id,name,description,teacherService.getTeacherById(dean_id)));
 
     }
 

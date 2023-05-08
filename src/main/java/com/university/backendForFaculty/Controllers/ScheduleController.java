@@ -41,11 +41,12 @@ public class ScheduleController {
                        @RequestParam(name = "start_time") Time start_time,
                        @RequestParam(name = "end_time") Time end_time,
                        @RequestParam(name = "course_id") Long course_id,
-                       @RequestParam(name = "teacher_id") Long teacher_id){
+                       @RequestParam(name = "teacher_id") Long teacher_id,
+                       @PathVariable Long id){
         ClassRoomService classRoomService = new ClassRoomService();
         CoursesService coursesService = new CoursesService();
         TeacherService teacherService = new TeacherService();
-        service.update(new Schedule(classRoomService.getClassRoomById(classroom_id),
+        service.update(new Schedule(id,classRoomService.getClassRoomById(classroom_id),
                 dayOfWeek,start_time,end_time,coursesService.getCourseById(course_id),
                 teacherService.getTeacherById(teacher_id)));
 

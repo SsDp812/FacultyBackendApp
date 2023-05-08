@@ -16,24 +16,24 @@ public class ScheduleDao {
 
     @Transactional
     public void save(Schedule schedule){
-        sessionFactory.getCurrentSession().persist(schedule);
+        sessionFactory.openSession().save(schedule);
     }
     @Transactional
     public void update(Schedule schedule){
-        sessionFactory.getCurrentSession().update(schedule);
+        sessionFactory.openSession().update(schedule);
     }
     @Transactional
     public void delete(Long id){
-        sessionFactory.getCurrentSession().delete(id);
+        sessionFactory.openSession().delete(id);
     }
 
     @Transactional
     public Schedule getScheduleById(Long id){
-        return sessionFactory.getCurrentSession().get(Schedule.class,id);
+        return sessionFactory.openSession().get(Schedule.class,id);
     }
     @Transactional
     public List<Schedule> getAllSchedules(){
-        return sessionFactory.getCurrentSession().createQuery("SELECT s FROM Schedule s", Schedule.class)
+        return sessionFactory.openSession().createQuery("SELECT s FROM Schedule s", Schedule.class)
                 .getResultList();
     }
 }

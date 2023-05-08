@@ -40,8 +40,9 @@ public class TeacherController {
                        @RequestParam(name = "birthday") Date birthday,
                        @RequestParam(name = "address") String address,
                        @RequestParam(name = "mobile") String mobile,
-                       @RequestParam(name = "mail") String mail){
-        service.update(new Teacher(name,surname,middlename,birthday,
+                       @RequestParam(name = "mail") String mail,
+                       @RequestParam Long id){
+        service.update(new Teacher(id,name,surname,middlename,birthday,
                 address,mobile,mail));
     }
 

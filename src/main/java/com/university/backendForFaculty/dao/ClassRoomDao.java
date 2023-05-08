@@ -7,37 +7,38 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Component
+@Repository
 public class ClassRoomDao {
     @Autowired
     SessionFactory sessionFactory;
 
     @Transactional
     public void save(ClassRoom classRoom){
-        sessionFactory.getCurrentSession().persist(classRoom);
+        sessionFactory.openSession().save(classRoom);
     }
 
     @Transactional
     public void update(ClassRoom classRoom){
-        sessionFactory.getCurrentSession().update(classRoom);
+        sessionFactory.openSession().update(classRoom);
     }
 
     @Transactional
     public void delete(Long id){
-        sessionFactory.getCurrentSession().delete(id);
+        sessionFactory.openSession().delete(id);
     }
 
     @Transactional
     public ClassRoom getClassRoomById(Long id){
-        return sessionFactory.getCurrentSession().get(ClassRoom.class,id);
+        return sessionFactory.openSession().get(ClassRoom.class,id);
     }
 
     @Transactional
     public List<ClassRoom> getAllClassRooms(){
-        return sessionFactory.getCurrentSession().createQuery("SELECT c from ClassRoom c",ClassRoom.class)
+        return sessionFactory.openSession().createQuery("SELECT c from ClassRoom c",ClassRoom.class)
                 .getResultList();
     }
 }

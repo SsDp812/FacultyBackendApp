@@ -16,26 +16,26 @@ public class GroupDao {
 
     @Transactional
     public void save(Group group){
-        sessionFactory.getCurrentSession().persist(group);
+        sessionFactory.openSession().save(group);
     }
 
     @Transactional
     public void update(Group group){
-        sessionFactory.getCurrentSession().update(group);
+        sessionFactory.openSession().update(group);
     }
 
     @Transactional
     public void delete(Long id){
-        sessionFactory.getCurrentSession().update(id);
+        sessionFactory.openSession().update(id);
     }
 
     @Transactional
     public Group getGroupById(Long id){
-        return sessionFactory.getCurrentSession().get(Group.class,id);
+        return sessionFactory.openSession().get(Group.class,id);
     }
     @Transactional
     public List<Group> getAllGroups(){
-        return sessionFactory.getCurrentSession().createQuery("SELECT g FROM Group g",Group.class)
+        return sessionFactory.openSession().createQuery("SELECT g FROM Group g",Group.class)
                 .getResultList();
     }
 }

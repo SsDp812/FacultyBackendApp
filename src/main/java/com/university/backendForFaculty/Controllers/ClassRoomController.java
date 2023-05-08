@@ -34,8 +34,9 @@ public class ClassRoomController {
     @PostMapping("/update/{id}")
     public void update(@RequestParam(name = "name") String name,
                        @RequestParam(name = "description") String description,
-                       @RequestParam(name = "capacity") int capacity){
-        service.update(new ClassRoom(name,description,capacity));
+                       @RequestParam(name = "capacity") int capacity,
+                       @PathVariable Long id){
+        service.update(new ClassRoom(id,name,description,capacity));
     }
 
     @PostMapping("/create")

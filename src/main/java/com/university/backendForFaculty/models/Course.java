@@ -24,17 +24,6 @@ public class Course {
     private Teacher teacher;
 
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    private List<Student> students;
-
-    public List<Student> getStudents() {
-        return students;
-    }
-
-    public void setStudents(List<Student> students) {
-        this.students = students;
-    }
-
     public Long getId() {
         return id;
     }

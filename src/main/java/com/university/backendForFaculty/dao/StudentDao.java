@@ -8,35 +8,36 @@ import org.apache.naming.factory.MailSessionFactory;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 
 import java.util.List;
 
-@Component
+@Repository
 public class StudentDao {
     @Autowired
     SessionFactory sessionFactory;
 
     @Transactional
     public void save(Student student){
-        sessionFactory.getCurrentSession().persist(student);
+        sessionFactory.openSession().save(student);
     }
     @Transactional
     public void update(Student student){
-        sessionFactory.getCurrentSession().update(student);
+        sessionFactory.openSession().update(student);
     }
     @Transactional
     public void delete(Long id){
-        sessionFactory.getCurrentSession().delete(id);
+        sessionFactory.openSession().delete(id);
     }
     @Transactional
     public Student getStudentById(Long id){
-        return sessionFactory.getCurrentSession().get(Student.class,id);
+        return sessionFactory.openSession().get(Student.class,id);
     }
     @Transactional
     public List<Student> getAllStudents(){
-        return sessionFactory.getCurrentSession().createQuery("SELECT s FROM Student s", Student.class)
+        return sessionFactory.openSession().createQuery("SELECT s FROM Student s", Student.class)
                 .getResultList();
     }
 }

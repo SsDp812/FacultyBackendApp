@@ -19,15 +19,31 @@ public class Mark {
     @JoinColumn(name = "student_id", referencedColumnName = "id")
     private Student student;
 
-    public Mark(Long id, Course course, Student student) {
+
+
+    @Column(name = "score")
+    private Long score;
+
+
+    public Mark(Long id, Long score, Course course, Student student) {
         this.id = id;
+        this.score = score;
         this.course = course;
         this.student = student;
     }
 
-    public Mark(Course course, Student student) {
+    public Mark(Long score, Course course, Student student) {
+        this.score = score;
         this.course = course;
         this.student = student;
+    }
+
+    public Long getScore() {
+        return score;
+    }
+
+    public void setScore(Long score) {
+        this.score = score;
     }
 
     public Mark() {

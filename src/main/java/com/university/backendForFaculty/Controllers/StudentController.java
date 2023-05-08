@@ -4,11 +4,13 @@ package com.university.backendForFaculty.Controllers;
 import com.university.backendForFaculty.dao.MarkDao;
 import com.university.backendForFaculty.dao.StudentDao;
 import com.university.backendForFaculty.models.Student;
+import com.university.backendForFaculty.services.CoursesService;
 import com.university.backendForFaculty.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -39,8 +41,9 @@ public class StudentController {
                        @RequestParam(name = "birthday") Date birthday,
                        @RequestParam(name = "address") String address,
                        @RequestParam(name = "mobile") String mobile,
-                       @RequestParam(name = "mail") String mail){
-        service.update(new Student(name,surname,middlename,birthday,
+                       @RequestParam(name = "mail") String mail,
+                       @PathVariable Long id){
+        service.update(new Student(id,name,surname,middlename,birthday,
                 address,mobile,mail));
 
     }
@@ -53,7 +56,30 @@ public class StudentController {
                        @RequestParam(name = "address") String address,
                        @RequestParam(name = "mobile") String mobile,
                        @RequestParam(name = "mail") String mail){
-        service.save(new Student(name,surname,middlename,birthday,
-                address,mobile,mail));
+        Student student = new Student(name,surname,middlename,birthday,
+                address,mobile,mail);
+        student.setCourses(new ArrayList<>());
+        service.save(student);
     }
+
+
+
+    @PostMapping("/courses/add/{id}")
+    public void addCourse(@RequestParam(name = "course_id") Long course_id, @PathVariable Long id){
+        Student student = service.getStudentById(id);
+        CoursesService coursesService = new CoursesService();
+        student.getCourses().add(coursesService.getCourseById(course_id));
+        service.update(student);
+    }
+
+
+    @PostMapping("/courses/remove/{id}")
+    public void removeCourse(@RequestParam(name = "course_id") Long course_id,@PathVariable Long id){
+        Student student = service.getStudentById(id);
+        CoursesService coursesService = new CoursesService();
+        student.getCourses().remove(coursesService.getCourseById(course_id));
+        service.update(student);
+    }
+
+
 }

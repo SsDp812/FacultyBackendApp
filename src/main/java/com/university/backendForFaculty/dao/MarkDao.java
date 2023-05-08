@@ -16,26 +16,26 @@ public class MarkDao {
 
     @Transactional
     public void save(Mark mark){
-        sessionFactory.getCurrentSession().persist(mark);
+        sessionFactory.openSession().save(mark);
     }
 
     @Transactional
     public void update(Mark mark){
-        sessionFactory.getCurrentSession().update(mark);
+        sessionFactory.openSession().update(mark);
     }
 
     @Transactional
     public void delete(Long id){
-        sessionFactory.getCurrentSession().delete(id);
+        sessionFactory.openSession().delete(id);
     }
 
     @Transactional
     public Mark getMarkById(Long id){
-        return sessionFactory.getCurrentSession().get(Mark.class,id);
+        return sessionFactory.openSession().get(Mark.class,id);
     }
     @Transactional
     public List<Mark> getAllMarks(){
-        return sessionFactory.getCurrentSession().createQuery("SELECT m FROM Mark m", Mark.class)
+        return sessionFactory.openSession().createQuery("SELECT m FROM Mark m", Mark.class)
                 .getResultList();
     }
 }

@@ -16,24 +16,24 @@ public class TeacherDao {
 
     @Transactional
     public void save(Teacher teacher){
-        sessionFactory.getCurrentSession().persist(teacher);
+        sessionFactory.openSession().save(teacher);
     }
 
     @Transactional
     public void update(Teacher teacher){
-        sessionFactory.getCurrentSession().update(teacher);
+        sessionFactory.openSession().update(teacher);
     }
 
     @Transactional
     public void delete(Long id){
-        sessionFactory.getCurrentSession().delete(id);
+        sessionFactory.openSession().delete(id);
     }
 
     public Teacher getTeacherById(Long id){
-        return sessionFactory.getCurrentSession().get(Teacher.class,id);
+        return sessionFactory.openSession().get(Teacher.class,id);
     }
     public List<Teacher> getAllTeachers(){
-        return sessionFactory.getCurrentSession().createQuery("SELECT t FROM Teacher t", Teacher.class)
+        return sessionFactory.openSession().createQuery("SELECT t FROM Teacher t", Teacher.class)
                 .getResultList();
     }
 }

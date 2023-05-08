@@ -35,13 +35,17 @@ public class Student {
     @Column(name = "mail")
     private String mail;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "students_courses",
-            joinColumns = @JoinColumn(name = "student_id"),
-            inverseJoinColumns = @JoinColumn(name = "course_id")
-    )
+    @OneToMany
+    @JoinColumn(name = "courses", referencedColumnName = "id")
     private List<Course> courses;
+
+    public List<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
+    }
 
     public Long getId() {
         return id;

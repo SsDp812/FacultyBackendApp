@@ -36,10 +36,11 @@ public class MarkController {
     @PostMapping("/update/{id}")
     public void update(@RequestParam(name = "score") Long score,
                        @RequestParam(name = "course_id") Long course_id,
-                       @RequestParam(name = "student_id") Long student_id){
+                       @RequestParam(name = "student_id") Long student_id,
+                       @PathVariable Long id){
         CoursesService coursesService = new CoursesService();
         StudentService studentService = new StudentService();
-        service.update(new Mark(score,coursesService.getCourseById(course_id),
+        service.update(new Mark(id,score,coursesService.getCourseById(course_id),
                 studentService.getStudentById(student_id)));
 
     }
@@ -50,7 +51,7 @@ public class MarkController {
                        @RequestParam(name = "student_id") Long student_id){
         CoursesService coursesService = new CoursesService();
         StudentService studentService = new StudentService();
-        service.update(new Mark(score,coursesService.getCourseById(course_id),
+        service.save(new Mark(score,coursesService.getCourseById(course_id),
                 studentService.getStudentById(student_id)));
     }
 }
