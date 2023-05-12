@@ -21,6 +21,11 @@ public class GroupController {
     @Autowired
     private GroupService service;
 
+    @Autowired
+    private CoursesService coursesService;
+    @Autowired
+    private StudentService studentService;
+
     @GetMapping("/")
     public List<Group> getAll(){
         return service.getAllGroups();
@@ -36,35 +41,30 @@ public class GroupController {
         service.delete(id);
     }
 
-    @PostMapping("/update/{id}")
+    @PostMapping("/update")
     public void update(@RequestParam(name = "name") String name,
                        @RequestParam(name = "course_id") Long course_id,
-                       @PathVariable Long id){
-        CoursesService coursesService = new CoursesService();
-        StudentService studentService = new StudentService();
+                       @RequestParam(name = "id") Long id){
         service.update(new Group(id,name,coursesService.getCourseById(course_id),service.getGroupById(id).getStudent()));
     }
 
     @PostMapping("/create")
     public void create(@RequestParam(name = "name") String name,
                        @RequestParam(name = "course_id") Long course_id){
-        CoursesService coursesService = new CoursesService();
         service.save(new Group(name,coursesService.getCourseById(course_id),new ArrayList<>()));
     }
 
 
-   @PostMapping("/addStudent/{id}")
-    public void addStudent(@RequestParam(name = "student_id") Long student_id, @PathVariable Long id){
-        StudentService studentService = new StudentService();
+   @PostMapping("/addStudent")
+    public void addStudent(@RequestParam(name = "student_id") Long student_id, @RequestParam(name = "id") Long id){
         Group group = service.getGroupById(id);
         group.getStudent().add(studentService.getStudentById(student_id));
         service.update(group);
    }
 
 
-    @PostMapping("/removeStudent/{id}")
-    public void removeStudent(@RequestParam(name = "student_id") Long student_id, @PathVariable Long id){
-        StudentService studentService = new StudentService();
+    @PostMapping("/removeStudent")
+    public void removeStudent(@RequestParam(name = "student_id") Long student_id, @RequestParam(name = "id") Long id){
         Group group = service.getGroupById(id);
         group.getStudent().remove(studentService.getStudentById(student_id));
         service.update(group);

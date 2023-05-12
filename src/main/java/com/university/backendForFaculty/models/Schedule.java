@@ -2,6 +2,8 @@ package com.university.backendForFaculty.models;
 
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.sql.Time;
 
@@ -14,6 +16,7 @@ public class Schedule {
     private Long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "classroom_id",referencedColumnName = "id")
     private ClassRoom classRoom;
 
@@ -27,10 +30,12 @@ public class Schedule {
     private Time end_time;
 
     @ManyToOne(fetch = FetchType.EAGER)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "course_id")
     private Course course;
 
     @ManyToOne(fetch = FetchType.EAGER)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "teacher_id")
     private Teacher teacher;
 

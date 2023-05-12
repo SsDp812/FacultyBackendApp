@@ -20,6 +20,9 @@ public class CourseController {
     @Autowired
     private CoursesService service;
 
+    @Autowired
+    private TeacherService teacherService;
+
     @GetMapping("/")
     public List<Course> getAll(){
         return service.getAllCourses();
@@ -27,6 +30,7 @@ public class CourseController {
 
     @GetMapping("/{id}")
     public Course getById(@PathVariable Long id){
+        System.out.println(service.getCourseById(id));
         return service.getCourseById(id);
     }
 
@@ -35,12 +39,11 @@ public class CourseController {
         service.delete(id);
     }
 
-    @PostMapping("/update/{id}")
+    @PostMapping("/update")
     public void update(@RequestParam(name = "name") String name,
                        @RequestParam(name = "description") String description,
                        @RequestParam(name = "teacher_id") Long teacher_id,
-                       @PathVariable Long id){
-        TeacherService teacherService = new TeacherService();
+                       @RequestParam(name = "id") Long id){
         service.update(new Course(id,name,description,teacherService.getTeacherById(teacher_id)));
 
     }
@@ -49,7 +52,6 @@ public class CourseController {
     public void create(@RequestParam(name = "name") String name,
                        @RequestParam(name = "description") String description,
                        @RequestParam(name = "teacher_id") Long teacher_id){
-        TeacherService teacherService = new TeacherService();
         service.save(new Course(name,description,teacherService.getTeacherById(teacher_id)));
     }
 }

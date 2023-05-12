@@ -2,6 +2,8 @@ package com.university.backendForFaculty.models;
 
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.List;
 
@@ -21,6 +23,7 @@ public class Course {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "teacher_id",referencedColumnName = "id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Teacher teacher;
 
 

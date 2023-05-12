@@ -20,6 +20,13 @@ public class ScheduleController {
     @Autowired
     private ScheduleService service;
 
+    @Autowired
+    ClassRoomService classRoomService;
+    @Autowired
+    CoursesService coursesService;
+    @Autowired
+    TeacherService teacherService;
+
     @GetMapping("/")
     public List<Schedule> getAll(){
         return service.getAllSchedules();
@@ -35,17 +42,14 @@ public class ScheduleController {
         service.delete(id);
     }
 
-    @PostMapping("/update/{id}")
+    @PostMapping("/update")
     public void update(@RequestParam(name = "classroom_id") Long classroom_id,
                        @RequestParam(name = "dayOfWeek") String dayOfWeek,
                        @RequestParam(name = "start_time") Time start_time,
                        @RequestParam(name = "end_time") Time end_time,
                        @RequestParam(name = "course_id") Long course_id,
                        @RequestParam(name = "teacher_id") Long teacher_id,
-                       @PathVariable Long id){
-        ClassRoomService classRoomService = new ClassRoomService();
-        CoursesService coursesService = new CoursesService();
-        TeacherService teacherService = new TeacherService();
+                       @RequestParam(name = "id") Long id){
         service.update(new Schedule(id,classRoomService.getClassRoomById(classroom_id),
                 dayOfWeek,start_time,end_time,coursesService.getCourseById(course_id),
                 teacherService.getTeacherById(teacher_id)));
@@ -59,9 +63,6 @@ public class ScheduleController {
                        @RequestParam(name = "end_time") Time end_time,
                        @RequestParam(name = "course_id") Long course_id,
                        @RequestParam(name = "teacher_id") Long teacher_id){
-        ClassRoomService classRoomService = new ClassRoomService();
-        CoursesService coursesService = new CoursesService();
-        TeacherService teacherService = new TeacherService();
         service.save(new Schedule(classRoomService.getClassRoomById(classroom_id),
                 dayOfWeek,start_time,end_time,coursesService.getCourseById(course_id),
                 teacherService.getTeacherById(teacher_id)));

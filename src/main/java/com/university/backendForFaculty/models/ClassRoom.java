@@ -2,6 +2,8 @@ package com.university.backendForFaculty.models;
 
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(name = "classroom")
@@ -23,7 +25,6 @@ public class ClassRoom {
     public Long getId() {
         return id;
     }
-
     public void setId(Long id) {
         this.id = id;
     }

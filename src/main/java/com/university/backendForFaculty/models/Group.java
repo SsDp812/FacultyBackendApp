@@ -1,7 +1,10 @@
 package com.university.backendForFaculty.models;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -17,9 +20,11 @@ public class Group {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "course_id",referencedColumnName = "id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Course course;
 
     @OneToMany(fetch = FetchType.EAGER)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "student_id",referencedColumnName = "id")
     private List<Student> student;
 
@@ -54,6 +59,11 @@ public class Group {
         this.name = name;
         this.course = course;
         this.student = student;
+    }
+    public Group(String name, Course course){
+        this.name = name;
+        this.course = course;
+        this.student = new ArrayList<>();
     }
 
     public Group(String name, Course course, List<Student> student) {

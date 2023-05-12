@@ -2,6 +2,8 @@ package com.university.backendForFaculty.models;
 
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(name = "Mark")
@@ -12,10 +14,12 @@ public class Mark {
     private Long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "course_id",referencedColumnName = "id")
     private Course course;
 
     @ManyToOne(fetch = FetchType.EAGER)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "student_id", referencedColumnName = "id")
     private Student student;
 

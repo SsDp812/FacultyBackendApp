@@ -2,8 +2,11 @@ package com.university.backendForFaculty.models;
 
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -37,6 +40,7 @@ public class Student {
 
     @OneToMany
     @JoinColumn(name = "courses", referencedColumnName = "id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Course> courses;
 
     public List<Course> getCourses() {
@@ -119,6 +123,7 @@ public class Student {
         this.address = address;
         this.mobile = mobile;
         this.mail = mail;
+        this.courses = new ArrayList<>();
     }
 
     public Student() {
@@ -133,6 +138,7 @@ public class Student {
         this.address = address;
         this.mobile = mobile;
         this.mail = mail;
+        this.courses = new ArrayList<>();
     }
 
     @Override

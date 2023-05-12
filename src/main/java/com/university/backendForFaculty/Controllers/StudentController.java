@@ -18,6 +18,8 @@ import java.util.List;
 public class StudentController {
     @Autowired
     private StudentService service;
+    @Autowired
+    private CoursesService coursesService;
 
     @GetMapping("/")
     public List<Student> getAll(){
@@ -34,7 +36,7 @@ public class StudentController {
         service.delete(id);
     }
 
-    @PostMapping("/update/{id}")
+    @PostMapping("/update")
     public void update(@RequestParam(name = "name") String name,
                        @RequestParam(name = "surname") String surname,
                        @RequestParam(name = "middlename") String middlename,
@@ -42,7 +44,7 @@ public class StudentController {
                        @RequestParam(name = "address") String address,
                        @RequestParam(name = "mobile") String mobile,
                        @RequestParam(name = "mail") String mail,
-                       @PathVariable Long id){
+                       @RequestParam(name = "id") Long id){
         service.update(new Student(id,name,surname,middlename,birthday,
                 address,mobile,mail));
 
@@ -64,19 +66,17 @@ public class StudentController {
 
 
 
-    @PostMapping("/courses/add/{id}")
-    public void addCourse(@RequestParam(name = "course_id") Long course_id, @PathVariable Long id){
+    @PostMapping("/courses/add")
+    public void addCourse(@RequestParam(name = "course_id") Long course_id,@RequestParam(name = "id") Long id){
         Student student = service.getStudentById(id);
-        CoursesService coursesService = new CoursesService();
         student.getCourses().add(coursesService.getCourseById(course_id));
         service.update(student);
     }
 
 
-    @PostMapping("/courses/remove/{id}")
-    public void removeCourse(@RequestParam(name = "course_id") Long course_id,@PathVariable Long id){
+    @PostMapping("/courses/remove")
+    public void removeCourse(@RequestParam(name = "course_id") Long course_id,@RequestParam(name = "id") Long id){
         Student student = service.getStudentById(id);
-        CoursesService coursesService = new CoursesService();
         student.getCourses().remove(coursesService.getCourseById(course_id));
         service.update(student);
     }

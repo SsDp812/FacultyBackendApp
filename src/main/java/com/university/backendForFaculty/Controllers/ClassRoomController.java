@@ -31,11 +31,11 @@ public class ClassRoomController {
         service.delete(id);
     }
 
-    @PostMapping("/update/{id}")
+    @PostMapping("/update")
     public void update(@RequestParam(name = "name") String name,
                        @RequestParam(name = "description") String description,
                        @RequestParam(name = "capacity") int capacity,
-                       @PathVariable Long id){
+                       @RequestParam(name = "id") Long id){
         service.update(new ClassRoom(id,name,description,capacity));
     }
 

@@ -33,7 +33,7 @@ public class TeacherController {
         service.delete(id);
     }
 
-    @PostMapping("/update/{id}")
+    @PostMapping("/update")
     public void update(@RequestParam(name = "name") String name,
                        @RequestParam(name = "surname") String surname,
                        @RequestParam(name = "middlename") String middlename,
@@ -41,7 +41,7 @@ public class TeacherController {
                        @RequestParam(name = "address") String address,
                        @RequestParam(name = "mobile") String mobile,
                        @RequestParam(name = "mail") String mail,
-                       @RequestParam Long id){
+                       @RequestParam(name = "id") Long id){
         service.update(new Teacher(id,name,surname,middlename,birthday,
                 address,mobile,mail));
     }

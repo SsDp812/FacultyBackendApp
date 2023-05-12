@@ -18,6 +18,11 @@ public class MarkController {
     @Autowired
     private MarkService service;
 
+    @Autowired
+    private CoursesService coursesService;
+    @Autowired
+    private StudentService studentService;
+
     @GetMapping("/")
     public List<Mark> getAll(){
         return service.getAllMarks();
@@ -33,13 +38,11 @@ public class MarkController {
         service.delete(id);
     }
 
-    @PostMapping("/update/{id}")
+    @PostMapping("/update")
     public void update(@RequestParam(name = "score") Long score,
                        @RequestParam(name = "course_id") Long course_id,
                        @RequestParam(name = "student_id") Long student_id,
-                       @PathVariable Long id){
-        CoursesService coursesService = new CoursesService();
-        StudentService studentService = new StudentService();
+                       @RequestParam(name = "id") Long id){
         service.update(new Mark(id,score,coursesService.getCourseById(course_id),
                 studentService.getStudentById(student_id)));
 
@@ -49,8 +52,6 @@ public class MarkController {
     public void create(@RequestParam(name = "score") Long score,
                        @RequestParam(name = "course_id") Long course_id,
                        @RequestParam(name = "student_id") Long student_id){
-        CoursesService coursesService = new CoursesService();
-        StudentService studentService = new StudentService();
         service.save(new Mark(score,coursesService.getCourseById(course_id),
                 studentService.getStudentById(student_id)));
     }

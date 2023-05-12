@@ -19,6 +19,9 @@ public class FacultyController {
     @Autowired
     private FacultyService service;
 
+    @Autowired
+    private TeacherService teacherService;
+
     @GetMapping("/")
     public List<Faculty> getAll(){
         return service.getAllFaculties();
@@ -34,12 +37,11 @@ public class FacultyController {
         service.delete(id);
     }
 
-    @PostMapping("/update/{id}")
+    @PostMapping("/update")
     public void update(@RequestParam(name = "name") String name,
                        @RequestParam(name = "description") String description,
                        @RequestParam(name = "dean") Long dean_id,
-                       @PathVariable Long id){
-        TeacherService teacherService = new TeacherService();
+                       @RequestParam(name = "id") Long id){
         service.update(new Faculty(id,name,description,teacherService.getTeacherById(dean_id)));
 
     }
@@ -48,7 +50,6 @@ public class FacultyController {
     public void create(@RequestParam(name = "name") String name,
                        @RequestParam(name = "description") String description,
                        @RequestParam(name = "dean") Long dean_id){
-        TeacherService teacherService = new TeacherService();
         service.save(new Faculty(name,description,teacherService.getTeacherById(dean_id)));
     }
 }
